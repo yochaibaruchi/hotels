@@ -12,7 +12,9 @@ app.use(express.json())
 app.use('/api/user', userRouter)
 
 
-
+app.get('/', (req, res) => {
+    return res.json('ddsdfd')
+})
 
 
 const port = process.env.port || 3003;
