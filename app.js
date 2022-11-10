@@ -9,7 +9,7 @@ app.use(express.json())
 app.use('/api/user', userRouter)
 
 
-app.use('/', (req, resp) => {
+app.get('/', (req, resp) => {
     resp.status(200).json("server in working?")
 })
 
