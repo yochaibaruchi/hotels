@@ -13,7 +13,7 @@ const db = mySQL.createConnection({
 
 db.connect((err) => {
     if (err) {
-        throw err;
+        console.log(err);
     }
     console.log('mySql connected');
 })
