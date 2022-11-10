@@ -13,7 +13,7 @@ app.use('/api/user', userRouter)
 
 
 
-const port = process.env.port || 5000
+const port = process.env.port || 80
 app.listen(port, () => {
     console.log(`app running on port ${port} `);
 })
