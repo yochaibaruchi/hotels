@@ -9,9 +9,6 @@ app.use(express.json())
 app.use('/api/user', userRouter)
 
 
-app.get('/', (req, resp) => {
-    return resp.status(200).json("server in working?")
-})
 
 
 

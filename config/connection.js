@@ -1,4 +1,5 @@
 const mySQL = require('mysql2')
+
 require('dotenv').config()
 
 const db = mySQL.createConnection({
