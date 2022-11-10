@@ -10,7 +10,7 @@ app.use('/api/user', userRouter)
 
 
 app.get('/', (req, resp) => {
-    resp.status(200).json("server in working?")
+    return resp.status(200).json("server in working?")
 })
 
 
