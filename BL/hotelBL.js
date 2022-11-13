@@ -3,7 +3,7 @@ const connect = require('../config/connection')
 
 
 class hotelBL {
-
+    // function  call Procedure for getting the right rooms from every hotel in database
     async getHotelsByParams(from_date, to_date, room_capacity) {
 
         try {
@@ -21,6 +21,28 @@ class hotelBL {
             console.log(error);
         }
     }
+
+    async createOrder(userId, startDate, endDate, hotelId, roomNumber) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const sql = `CALL hotelDB.craet_order(${userId},${startDate},${endDate},${hotelId},${roomNumber})`
+                connect.query(sql, (err, result) => {
+                    if (err) reject(new Error(err.message))
+                    resolve(result.insertId)
+                })
+            })
+            return response;
+        } catch (error) {
+            throw error
+        }
+
+
+
+
+
+    }
+
+
 
 
 

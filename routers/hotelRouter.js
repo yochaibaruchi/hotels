@@ -26,6 +26,24 @@ router.get('/', async (req, resp) => {
 })
 
 
+router.post('/order', async (req, resp) => {
+    let userId = req.body.userId
+    let startDate = req.body.startDate
+    let endDate = req.body.endDate
+    let hotelId = req.body.hotelId
+    let roomNumber = req.body.roomNumber
+    const token = req.headers['x-access-token']
+    let isValid = await tokenManage.auth(token)
+    if (isValid) {
+        let myData = await BL.createOrder(userId, startDate, endDate, hotelId, roomNumber)
+        return resp.status(200).json({ data: myData, auth: true })
+    } else {
+        return resp.json({ auth: false })
+    }
+
+})
+
+
 
 
 
