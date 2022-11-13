@@ -21,14 +21,30 @@ class hotelBL {
             console.log(error);
         }
     }
-
+    // craeting the order and filling the room_order table as well for securing the room for thr user
     async createOrder(userId, startDate, endDate, hotelId, roomNumber) {
         try {
             const response = await new Promise((resolve, reject) => {
                 const sql = `CALL hotelDB.craet_order(${userId},'${startDate}','${endDate}',${hotelId},${roomNumber})`
                 connect.query(sql, (err, result) => {
                     if (err) reject(new Error(err.message))
-                    resolve(result.affectedRows)
+                    resolve(result.insertId)
+                })
+            })
+            return response;
+        } catch (error) {
+            throw error
+        }
+
+    }
+    // update columm complete to 1 whene order completed
+    async complete(orderId) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const sql = `UPDATE hotelDB.order SET completed = 1 WHERE order_id = ${orderId}`
+                connect.query(sql, (err, result) => {
+                    if (err) reject(new Error(err.message))
+                    resolve(result)
                 })
             })
             return response;
@@ -38,11 +54,7 @@ class hotelBL {
 
 
 
-
-
     }
-
-
 
 
 

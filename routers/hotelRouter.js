@@ -44,6 +44,24 @@ router.post('/order', async (req, resp) => {
 })
 
 
+router.put('/complete', async (req, resp) => {
+    const order_id = req.body.order_id
+    const token = req.headers['x-access-token']
+    let isValid = await tokenManage.auth(token)
+    if (isValid) {
+        let myData = await BL.complete(order_id)
+        return resp.status(200).json({ auth: true, data: myData })
+    } else {
+        return resp.json({ auth: false })
+    }
+})
+
+
+
+
+
+
+
 
 
 
