@@ -79,7 +79,7 @@ class userBL {
                 const sql = 'SELECT * FROM user'
                 connect.query(sql, (err, result) => {
                     if (err) reject(new Error(err.message))
-                    if (result.length > 0) {
+                    if (result[0] != null) {
                         resolve(result)
                     } else {
                         reject('no data')
