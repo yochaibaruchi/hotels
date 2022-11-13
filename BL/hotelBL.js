@@ -25,7 +25,7 @@ class hotelBL {
     async createOrder(userId, startDate, endDate, hotelId, roomNumber) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `CALL hotelDB.craet_order(${userId},${startDate},${endDate},${hotelId},${roomNumber})`
+                const sql = `CALL hotelDB.craet_order(${userId},'${startDate}','${endDate}',${hotelId},${roomNumber})`
                 connect.query(sql, (err, result) => {
                     if (err) reject(new Error(err.message))
                     resolve(result.affectedRows)
