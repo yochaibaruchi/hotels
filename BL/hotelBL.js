@@ -28,7 +28,7 @@ class hotelBL {
                 const sql = `CALL hotelDB.craet_order(${userId},${startDate},${endDate},${hotelId},${roomNumber})`
                 connect.query(sql, (err, result) => {
                     if (err) reject(new Error(err.message))
-                    resolve(result.insertId)
+                    resolve(result.affectedRows)
                 })
             })
             return response;

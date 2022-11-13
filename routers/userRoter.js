@@ -50,7 +50,7 @@ router.get('/', async function (req, resp) {
     if (isValid.auth) {
         try {
             let myData = await userBL.getAllUsers()
-            return resp.json({ data: myData, auth: true })
+            return resp.status(200).json({ data: myData, auth: true })
         } catch (error) {
             throw new Error(error)
         }
