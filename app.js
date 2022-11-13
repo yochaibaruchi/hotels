@@ -10,7 +10,9 @@ app.use('/api/user', userRouter)
 
 
 
-
+app.get('/', (req, resp) => {
+    return resp.status(200).send('app is running')
+})
 
 
 const port = process.env.port || 8000
