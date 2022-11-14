@@ -4,11 +4,11 @@ const connect = require('../config/connection')
 
 class hotelBL {
     // function  call Procedure for getting the right rooms from every hotel in database
-    async getHotelsByParams(from_date, to_date, room_capacity) {
+    async getHotelRoomOptionsByParams(from_date, to_date, hotel_id) {
 
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `CALL hotelDB.get_room_by_param(${from_date}, ${to_date},${room_capacity})`
+                const sql = `CALL hotelDB.get_room_by_param(${from_date}, ${to_date},${hotel_id})`
                 connect.query(sql, (err, result) => {
                     if (err) reject(new Error(err.message))
                     if (result.length === 0) resolve({ rooms: false, message: "no room available" })
@@ -22,10 +22,10 @@ class hotelBL {
         }
     }
     // craeting the order and filling the room_order table as well for securing the room for thr user
-    async createOrder(userId, startDate, endDate, hotelId, roomNumber) {
+    async createOrder(userId, startDate, endDate, hotelId, NumberOfRoom2, NumberOfRoom3, NumberOfRoom4) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `CALL hotelDB.craet_order(${userId},'${startDate}','${endDate}',${hotelId},${roomNumber})`
+                const sql = `CALL hotelDB.craet_order(${userId},'${startDate}','${endDate}',${hotelId},${NumberOfRoom2} ,${NumberOfRoom3} ,${NumberOfRoom4})`
                 connect.query(sql, (err, result) => {
                     if (err) reject(new Error(err.message))
                     resolve(result)
@@ -51,10 +51,11 @@ class hotelBL {
         } catch (error) {
             throw error
         }
-
-
-
     }
+
+
+
+
 
 
 

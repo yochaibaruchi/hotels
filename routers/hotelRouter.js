@@ -13,9 +13,9 @@ router.get('/', async (req, resp) => {
     if (isValid) {
         const startDate = req.body.start_date
         const totDate = req.body.to_date
-        const capacity = req.body.room_capacity
+        const hotelId = req.body.hotelId
         try {
-            let myData = await BL.getHotelsByParams(startDate, totDate, capacity)
+            let myData = await BL.getHotelRoomOptionsByParams(startDate, totDate, hotelId)
             return resp.status(200).json({ data: myData, auth: true })
         } catch (error) {
             throw error;
@@ -31,11 +31,13 @@ router.post('/order', async (req, resp) => {
     let startDate = req.body.startDate
     let endDate = req.body.endDate
     let hotelId = req.body.hotelId
-    let roomNumber = req.body.roomNumber
+    let NumberOfRoom2 = req.body.NumberOfRoom2
+    let NumberOfRoom3 = req.body.NumberOfRoom3
+    let NumberOfRoom4 = req.body.NumberOfRoom4
     const token = req.headers['x-access-token']
     let isValid = await tokenManage.auth(token)
     if (isValid) {
-        let myData = await BL.createOrder(userId, startDate, endDate, hotelId, roomNumber)
+        let myData = await BL.createOrder(userId, startDate, endDate, hotelId, NumberOfRoom2, NumberOfRoom3, NumberOfRoom4)
         return resp.status(200).json({ data: myData, auth: true })
     } else {
         return resp.json({ auth: false })
