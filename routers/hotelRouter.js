@@ -7,7 +7,7 @@ const BL = new hotelBL();
 
 
 
-router.get('/', async (req, resp) => {
+router.get('/room', async (req, resp) => {
     const token = req.headers['x-access-token']
     let isValid = await tokenManage.auth(token)
     if (isValid) {
@@ -45,7 +45,7 @@ router.post('/order', async (req, resp) => {
 
 })
 
-
+// marking order as complete
 router.put('/complete', async (req, resp) => {
     const order_id = req.body.order_id
     const token = req.headers['x-access-token']
@@ -59,12 +59,28 @@ router.put('/complete', async (req, resp) => {
 })
 
 
+// reservation for the user
+router.get('/reservation', async (req, resp) => {
+    const order_id = req.body.order_id;
+    const token = req.headers['x-access-token']
+    let isValid = await tokenManage.auth(token)
+    if (!isValid) return resp.json({ auth: false })
+    let myData = await BL.getReservation(order_id)
+    return resp.status(200).json({ auth: true, data: myData })
+})
 
 
-
-
-
-
+// gets hotels with rooms who fit to the params
+router.get('/hotel', async (req, resp) => {
+    const token = req.headers['x-access-token']
+    let isValid = await tokenManage.auth(token)
+    if (!isValid) return resp.json({ auth: false })
+    const start_date = req.body.start_date;
+    const end_date = req.body.end_date;
+    const number_of_guests = req.body.number_of_guests;
+    let myData = await BL.getHotelsByParams(start_date, end_date, number_of_guests)
+    return resp.status(200).json({ auth: true, data: myData })
+})
 
 
 

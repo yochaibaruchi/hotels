@@ -8,7 +8,7 @@ class hotelBL {
 
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `CALL hotelDB.get_room_by_param(${from_date}, ${to_date},${hotel_id})`
+                const sql = `CALL hotelDB.get_room_by_param('${from_date}', '${to_date}',${hotel_id})`
                 connect.query(sql, (err, result) => {
                     if (err) reject(new Error(err.message))
                     if (result.length === 0) resolve({ rooms: false, message: "no room available" })
@@ -21,6 +21,26 @@ class hotelBL {
             console.log(error);
         }
     }
+
+
+    async getHotelsByParams(start_date, end_date, number_of_guests) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const sql = `CALL hotelDB.get_hotel_by_param('${start_date}','${end_date}',${number_of_guests})`
+                connect.query(sql, (err, result) => {
+                    if (err) reject(new Error(err.message))
+                    resolve(result)
+                })
+            })
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
+
     // craeting the order and filling the room_order table as well for securing the room for thr user
     async createOrder(userId, startDate, endDate, hotelId, NumberOfRoom2, NumberOfRoom3, NumberOfRoom4) {
         try {
@@ -54,7 +74,20 @@ class hotelBL {
     }
 
 
-
+    async getReservation(order_id) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const sql = `CALL hotelDB.show_reservation(${order_id})`
+                connect.query(sql, (err, result) => {
+                    if (err) reject(new Error(err.message))
+                    resolve(result)
+                })
+            })
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 
