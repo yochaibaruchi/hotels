@@ -12,7 +12,7 @@ router.get('/room', async (req, resp) => {
     let isValid = await tokenManage.auth(token)
     if (isValid) {
         const startDate = req.body.start_date
-        const totDate = req.body.to_date
+        const totDate = req.body.end_date
         const hotelId = req.body.hotelId
         try {
             let myData = await BL.getHotelRoomOptionsByParams(startDate, totDate, hotelId)
