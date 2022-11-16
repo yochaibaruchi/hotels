@@ -6,26 +6,21 @@ const tokenManage = new authService()
 const BL = new hotelBL();
 
 
-
+// get rooms of a particular hotel
 router.get('/room', async (req, resp) => {
-    const token = req.headers['x-access-token']
-    let isValid = await tokenManage.auth(token)
-    if (isValid) {
-        const startDate = req.body.start_date
-        const totDate = req.body.end_date
-        const hotelId = req.body.hotelId
-        try {
-            let myData = await BL.getHotelRoomOptionsByParams(startDate, totDate, hotelId)
-            return resp.status(200).json({ data: myData, auth: true })
-        } catch (error) {
-            throw error;
-        }
-
-    } else return resp.json({ auth: false })
+    const startDate = req.body.start_date
+    const totDate = req.body.end_date
+    const hotelId = req.body.hotelId
+    try {
+        let myData = await BL.getHotelRoomOptionsByParams(startDate, totDate, hotelId)
+        return resp.status(200).json({ data: myData, auth: true })
+    } catch (error) {
+        throw error;
+    }
 
 })
 
-
+// order only for loged in user 
 router.post('/order', async (req, resp) => {
     let userId = req.body.userId
     let startDate = req.body.startDate
@@ -45,7 +40,7 @@ router.post('/order', async (req, resp) => {
 
 })
 
-// marking order as complete
+// marking order as complete demand a token
 router.put('/complete', async (req, resp) => {
     const order_id = req.body.order_id
     const token = req.headers['x-access-token']
@@ -59,7 +54,7 @@ router.put('/complete', async (req, resp) => {
 })
 
 
-// reservation for the user
+// reservation for the user only if loged in 
 router.get('/reservation', async (req, resp) => {
     const order_id = req.body.order_id;
     const token = req.headers['x-access-token']
@@ -72,15 +67,15 @@ router.get('/reservation', async (req, resp) => {
 
 // gets hotels with rooms who fit to the params
 router.get('/hotel', async (req, resp) => {
-    const token = req.headers['x-access-token']
-    let isValid = await tokenManage.auth(token)
-    if (!isValid) return resp.json({ auth: false })
     const start_date = req.body.start_date;
     const end_date = req.body.end_date;
     const number_of_guests = req.body.number_of_guests;
     let myData = await BL.getHotelsByParams(start_date, end_date, number_of_guests)
     return resp.status(200).json({ auth: true, data: myData })
 })
+
+
+
 
 
 
