@@ -32,13 +32,14 @@ router.post('/signIn', async function (req, resp) {
 
 // LOGIN 
 router.post('/login', async function (req, resp) {
+    console.log(req.body)
     const password = req.body.user_password;
     const userEmail = req.body.user_email;
     try {
         let response = await userBL.logIn(userEmail, password)
-        return resp.json(response)
+        return resp.status(200).json(response)
     } catch (error) {
-        return resp.json(error)
+        return resp.status(500).json(error)
     }
 })
 
