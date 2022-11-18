@@ -56,7 +56,17 @@ class userBL {
                         bcrypt.compare(user_password, result[0].user_password).then((comparison) => {
                             if (comparison) {
                                 let myToken = this.generateAccessToken(result[0])
-                                resolve({ token: myToken, enter: true })
+
+                                const returnedObj = {
+                                    country: result[0].country,
+                                    firstName: result[0].first_name,
+                                    last_name: result[0].last_name,
+                                    id: result[0].user_id,
+                                    mail: result[0].user_email
+                                }
+
+
+                                resolve({ token: myToken, enter: true, user: returnedObj })
                             } else {
                                 resolve({ enter: false, message: 'user name or password are not correct' })
                             }
