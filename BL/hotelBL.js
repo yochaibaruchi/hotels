@@ -1,4 +1,4 @@
-const connect = require('../config/connection')
+const pool = require('../config/connection')
 
 
 
@@ -8,12 +8,16 @@ class hotelBL {
 
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `CALL hotelDB.get_room_by_param('${from_date}', '${to_date}',${hotel_id})`
-                connect.query(sql, (err, result) => {
-                    if (err) reject(new Error(err.message))
-                    if (result.length === 0) resolve({ rooms: false, message: "no room available" })
-                    resolve({ room: true, data: result, message: "found rooms" })
+                pool.getConnection((error, connect) => {
+                    if (error) throw error
+                    const sql = `CALL hotelDB.get_room_by_param('${from_date}', '${to_date}',${hotel_id})`
+                    connect.query(sql, (err, result) => {
+                        if (err) reject(new Error(err.message))
+                        if (result.length === 0) resolve({ rooms: false, message: "no room available" })
+                        resolve({ room: true, data: result, message: "found rooms" })
 
+                    })
+                    connect.release()
                 })
             })
             return response;
@@ -26,10 +30,14 @@ class hotelBL {
     async getHotelsByParams(start_date, end_date, number_of_guests) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `CALL hotelDB.get_hotel_by_param('${start_date}','${end_date}',${number_of_guests})`
-                connect.query(sql, (err, result) => {
-                    if (err) reject(new Error(err.message))
-                    resolve(result)
+                pool.getConnection((error, connect) => {
+                    if (error) throw error
+                    const sql = `CALL hotelDB.get_hotel_by_param('${start_date}','${end_date}',${number_of_guests})`
+                    connect.query(sql, (err, result) => {
+                        if (err) reject(new Error(err.message))
+                        resolve(result)
+                    })
+                    connect.release()
                 })
             })
             return response;
@@ -45,10 +53,14 @@ class hotelBL {
     async createOrder(userId, startDate, endDate, hotelId, NumberOfRoom2, NumberOfRoom3, NumberOfRoom4) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `CALL hotelDB.craet_order(${userId},'${startDate}','${endDate}',${hotelId},${NumberOfRoom2} ,${NumberOfRoom3} ,${NumberOfRoom4})`
-                connect.query(sql, (err, result) => {
-                    if (err) reject(new Error(err.message))
-                    resolve(result)
+                pool.getConnection((error, connect) => {
+                    if (error) throw error
+                    const sql = `CALL hotelDB.craet_order(${userId},'${startDate}','${endDate}',${hotelId},${NumberOfRoom2} ,${NumberOfRoom3} ,${NumberOfRoom4})`
+                    connect.query(sql, (err, result) => {
+                        if (err) reject(new Error(err.message))
+                        resolve(result)
+                    })
+                    connect.release()
                 })
             })
             return response;
@@ -61,10 +73,14 @@ class hotelBL {
     async complete(orderId) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `UPDATE hotelDB.order SET completed = 1 WHERE order_id = ${orderId}`
-                connect.query(sql, (err, result) => {
-                    if (err) reject(new Error(err.message))
-                    resolve(result)
+                pool.getConnection((error, connect) => {
+                    if (error) throw error
+                    const sql = `UPDATE hotelDB.order SET completed = 1 WHERE order_id = ${orderId}`
+                    connect.query(sql, (err, result) => {
+                        if (err) reject(new Error(err.message))
+                        resolve(result)
+                    })
+                    connect.release()
                 })
             })
             return response;
@@ -77,10 +93,14 @@ class hotelBL {
     async getReservation(order_id) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const sql = `CALL hotelDB.show_reservation(${order_id})`
-                connect.query(sql, (err, result) => {
-                    if (err) reject(new Error(err.message))
-                    resolve(result)
+                pool.getConnection((error, connect) => {
+                    if (error) throw error
+                    const sql = `CALL hotelDB.show_reservation(${order_id})`
+                    connect.query(sql, (err, result) => {
+                        if (err) reject(new Error(err.message))
+                        resolve(result)
+                    })
+                    connect.release()
                 })
             })
             return response;
