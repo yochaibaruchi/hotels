@@ -55,7 +55,7 @@ class hotelBL {
             const response = await new Promise((resolve, reject) => {
                 pool.getConnection((error, connect) => {
                     if (error) throw error
-                    const sql = `CALL hotelDB.craet_order(${userId},'${startDate}','${endDate}',${hotelId},${NumberOfRoom2} ,${NumberOfRoom3} ,${NumberOfRoom4})`
+                    const sql = `CALL hotelDB.craete_order(${userId},'${startDate}','${endDate}',${hotelId},${NumberOfRoom2} ,${NumberOfRoom3} ,${NumberOfRoom4})`
                     connect.query(sql, (err, result) => {
                         if (err) reject(new Error(err.message))
                         resolve(result)
