@@ -64,13 +64,13 @@ class userBL {
                                         let myToken = this.generateAccessToken(result[0])
 
                                         const returnedObj = {
-                                            country: result[0].country,
+                                            country: result[0].user_country,
                                             firstName: result[0].first_name,
                                             last_name: result[0].last_name,
                                             id: result[0].user_id,
                                             mail: result[0].user_email
                                         }
-
+                                        console.log(returnedObj.country);
                                         resolve({ token: myToken, enter: true, user: returnedObj })
                                     } else {
                                         resolve({ enter: false, message: 'user name or password are not correct' })
