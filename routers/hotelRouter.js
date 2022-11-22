@@ -66,10 +66,10 @@ router.get('/reservation', async (req, resp) => {
 
 
 // gets hotels with rooms who fit to the params
-router.get('/hotel', async (req, resp) => {
-    const start_date = req.body.start_date;
-    const end_date = req.body.end_date;
-    const number_of_guests = req.body.number_of_guests;
+router.get('/hotel/:start_date/:end_date/:numberOfguests', async (req, resp) => {
+    const start_date = req.params.start_date;
+    const end_date = req.params.end_date;
+    const number_of_guests = req.params.numberOfguests
     let myData = await BL.getHotelsByParams(start_date, end_date, number_of_guests)
     return resp.status(200).json({ auth: true, data: myData })
 })
