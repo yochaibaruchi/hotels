@@ -35,7 +35,7 @@ class hotelBL {
                     const sql = `CALL hotelDB.get_hotel_by_param('${start_date}','${end_date}',${number_of_guests})`
                     connect.query(sql, (err, result) => {
                         if (err) reject(new Error(err.message))
-                        resolve(result)
+                        resolve(result[0])
                     })
                     connect.release()
                 })
