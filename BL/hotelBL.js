@@ -14,7 +14,7 @@ class hotelBL {
                     connect.query(sql, (err, result) => {
                         if (err) reject(new Error(err.message))
                         if (result.length === 0) resolve({ rooms: false, message: "no room available" })
-                        resolve({ room: true, data: result, message: "found rooms" })
+                        resolve({ room: true, data: result[0], message: "found rooms" })
 
                     })
                     connect.release()
