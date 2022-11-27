@@ -12,8 +12,8 @@ router.get('/room/:start_date/:end_date/:hotelId', async (req, resp) => {
     const totDate = req.params.end_date
     const hotelId = req.params.hotelId
     try {
-        let myData = await BL.getHotelRoomOptionsByParams(startDate, totDate, hotelId)
-        return resp.status(200).json({ data: myData, auth: true })
+        const { data } = await BL.getHotelRoomOptionsByParams(startDate, totDate, hotelId)
+        return resp.status(200).json({ data: data, auth: true })
     } catch (error) {
         throw error;
     }
