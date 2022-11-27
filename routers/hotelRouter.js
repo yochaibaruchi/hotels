@@ -7,10 +7,10 @@ const BL = new hotelBL();
 
 
 // get rooms of a particular hotel
-router.get('/room', async (req, resp) => {
-    const startDate = req.body.start_date
-    const totDate = req.body.end_date
-    const hotelId = req.body.hotelId
+router.get('/room/:start_date/:end_date/:hotelId', async (req, resp) => {
+    const startDate = req.params.start_date
+    const totDate = req.params.end_date
+    const hotelId = req.params.hotelId
     try {
         let myData = await BL.getHotelRoomOptionsByParams(startDate, totDate, hotelId)
         return resp.status(200).json({ data: myData, auth: true })
