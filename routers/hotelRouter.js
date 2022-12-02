@@ -4,7 +4,7 @@ const authService = require('../BL/authService');
 const hotelBL = require('../BL/hotelBL')
 const tokenManage = new authService()
 const BL = new hotelBL();
-
+require('dotenv').config()
 
 // get rooms of a particular hotel
 router.get('/room/:start_date/:end_date/:hotelId', async (req, resp) => {
@@ -76,6 +76,9 @@ router.get('/hotel/:start_date/:end_date/:numberOfguests', async (req, resp) => 
 
 
 
+router.get('/map', (req, resp) => {
+    return resp.send(process.env.GOOGLE_MAP_KEY)
+})
 
 
 
