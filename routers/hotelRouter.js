@@ -74,15 +74,4 @@ router.get('/hotel/:start_date/:end_date/:numberOfguests', async (req, resp) => 
     return resp.status(200).json({ auth: true, data: myData })
 })
 
-
-
-router.get('/map', (req, resp) => {
-    return resp.send(process.env.GOOGLE_MAP_KEY)
-})
-
-
-
-
-
-
 module.exports = router;
