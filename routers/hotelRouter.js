@@ -33,7 +33,7 @@ router.post('/order', async (req, resp) => {
     let isValid = await tokenManage.auth(token)
     if (isValid) {
         let myData = await BL.createOrder(userId, startDate, endDate, hotelId, NumberOfRoom2, NumberOfRoom3, NumberOfRoom4)
-        return resp.status(200).json({ data: myData, auth: true })
+        return resp.status(200).json({ data: myData[0], auth: true })
     } else {
         return resp.json({ auth: false })
     }
