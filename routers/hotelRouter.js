@@ -56,8 +56,8 @@ router.put('/complete', async (req, resp) => {
 
 
 // reservation for the user only if loged in 
-router.get('/reservation', async (req, resp) => {
-    const order_id = req.body.order_id;
+router.get('/reservation/:order_id', async (req, resp) => {
+    const order_id = req.params.order_id
     const token = req.headers['Authorization']
     let isValid = await tokenManage.auth(token)
     if (!isValid) return resp.json({ auth: false })
