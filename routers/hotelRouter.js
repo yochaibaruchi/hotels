@@ -62,7 +62,7 @@ router.get('/reservation', async (req, resp) => {
     let isValid = await tokenManage.auth(token)
     if (!isValid) return resp.json({ auth: false })
     let myData = await BL.getReservation(order_id)
-    return resp.status(200).json({ auth: true, data: myData })
+    return resp.status(200).json(myData)
 })
 
 
