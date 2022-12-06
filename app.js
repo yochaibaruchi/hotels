@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const https = require('https')
+const fs = require('fs')
+const path = require('path')
 const userRouter = require('./routers/userRoter')
 const hotelRouter = require('./routers/hotelRouter')
 const app = express();
@@ -16,6 +19,11 @@ app.get('/', (req, resp) => {
 
 
 const port = process.env.PORT || 8000
-app.listen(port, () => {
-    console.log(`app running on port ${port} `);
-})
+
+
+const sslServer = https.createServer({
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
+}, app)
+
+sslServer.listen(port, () => console.log('secure server'))
