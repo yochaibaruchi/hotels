@@ -30,7 +30,7 @@ router.post('/order', cors(), async (req, resp) => {
     let NumberOfRoom2 = req.body.NumberOfRoom2
     let NumberOfRoom3 = req.body.NumberOfRoom3
     let NumberOfRoom4 = req.body.NumberOfRoom4
-    const token = req.headers['Authorization']
+    const token = req.headers['x-access-token']
     let isValid = await tokenManage.auth(token)
     if (isValid) {
         let myData = await BL.createOrder(userId, startDate, endDate, hotelId, NumberOfRoom2, NumberOfRoom3, NumberOfRoom4)
@@ -44,7 +44,7 @@ router.post('/order', cors(), async (req, resp) => {
 // marking order as complete demand a token
 router.put('/complete', async (req, resp) => {
     const order_id = req.body.order_id
-    const token = req.headers['Authorization']
+    const token = req.headers['x-access-token']
     let isValid = await tokenManage.auth(token)
     if (isValid) {
         let myData = await BL.complete(order_id)
@@ -58,7 +58,7 @@ router.put('/complete', async (req, resp) => {
 // reservation for the user only if loged in 
 router.get('/reservation/:order_id', async (req, resp) => {
     const order_id = req.params.order_id
-    const token = req.headers['Authorization']
+    const token = req.headers['x-access-token']
     let isValid = await tokenManage.auth(token)
     if (!isValid) return resp.json({ auth: false })
     let myData = await BL.getReservation(order_id)

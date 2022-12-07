@@ -46,7 +46,7 @@ router.post('/login', async function (req, resp) {
 
 // get all users
 router.get('/', async function (req, resp) {
-    const token = req.headers['Authorization']
+    const token = req.headers['x-access-token']
     let isValid = await tokenManage.auth(token)
     if (isValid.auth) {
         try {
