@@ -3,18 +3,18 @@ const cors = require('cors');
 const userRouter = require('./routers/userRoter')
 const hotelRouter = require('./routers/hotelRouter')
 const app = express();
-let whitelist = ['http://localhost:3000', 'https://main.dpumd3a0ayks.amplifyapp.com', 'http://nodehotel-env.eba-j2swbhjm.eu-central-1.elasticbeanstalk.com', "https://hotelapidemo.com"]
-let corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}
+// let whitelist = ['http://localhost:3000', 'https://main.dpumd3a0ayks.amplifyapp.com', 'http://nodehotel-env.eba-j2swbhjm.eu-central-1.elasticbeanstalk.com/', "https://hotelapidemo.com/"]
+// let corsOptions = {
+//     origin: function (origin, callback) {
+//         if (whitelist.indexOf(origin) !== -1) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by CORS'))
+//         }
+//     }
+// }
 
-app.use(cors(corsOptions))
+// app.use(cors())
 app.use(express.json())
 app.use('/api/user', userRouter)
 app.use('/api/hotel', hotelRouter)
