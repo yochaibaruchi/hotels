@@ -3,7 +3,6 @@ const cors = require('cors');
 const userRouter = require('./routers/userRoter')
 const hotelRouter = require('./routers/hotelRouter')
 const app = express();
-app.use(cors());
 app.use(express.json())
 
 app.use('/api/user', cors(), userRouter)
