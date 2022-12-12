@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const authService = require('../BL/authService');
 const hotelBL = require('../BL/hotelBL')
-const cors = require('cors');
 const tokenManage = new authService()
 const BL = new hotelBL();
 require('dotenv').config()
@@ -22,7 +21,7 @@ router.get('/room/:start_date/:end_date/:hotelId', async (req, resp) => {
 })
 
 // order only for loged in user 
-router.post('/order', cors(), async (req, resp) => {
+router.post('/order', async (req, resp) => {
     let userId = req.body.userId
     let startDate = req.body.startDate
     let endDate = req.body.endDate
