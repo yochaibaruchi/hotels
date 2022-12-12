@@ -3,7 +3,18 @@ const cors = require('cors');
 const userRouter = require('./routers/userRoter')
 const hotelRouter = require('./routers/hotelRouter')
 const app = express();
-app.use(cors())
+let whitelist = ['http://localhost:3000', 'https://main.dpumd3a0ayks.amplifyapp.com']
+let corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use('/api/user', userRouter)
 app.use('/api/hotel', hotelRouter)
