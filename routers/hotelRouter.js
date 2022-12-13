@@ -32,9 +32,12 @@ router.post('/order', async (req, resp) => {
     const token = req.headers['x-access-token']
     let isValid = await tokenManage.auth(token)
     if (isValid) {
-        let myData = await BL.createOrder(userId, startDate, endDate, hotelId, NumberOfRoom2, NumberOfRoom3, NumberOfRoom4)
-        console.log(myData);
-        return resp.status(201).json({ data: myData[0][0].order_id, auth: true })
+        try {
+
+            let myData = await BL.createOrder(userId, startDate, endDate, hotelId, NumberOfRoom2, NumberOfRoom3, NumberOfRoom4)
+            console.log(myData);
+            return resp.status(201).json({ data: myData[0][0].order_id, auth: true })
+        } catch (err) { return resp.status(200).json(err) }
     } else {
         return resp.status(200).json({ auth: false })
     }

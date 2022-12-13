@@ -58,7 +58,7 @@ class hotelBL {
                     const sql = `CALL hotelDB.craete_order(${userId},'${startDate}','${endDate}',${hotelId},${NumberOfRoom2} ,${NumberOfRoom3} ,${NumberOfRoom4})`
                     connect.query(sql, (err, result) => {
                         if (err) reject(new Error(err.message))
-                        if (result.length > 0) resolve(result)
+                        if (result.length > 0) { resolve(result) } else { reject(new Error("result is not an empty array")) }
                     })
                     connect.release()
                 })
