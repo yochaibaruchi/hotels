@@ -61,6 +61,7 @@ class hotelBL {
                             console.log(err.message);
                             reject(new Error(err.message))
                         }
+                        if (result == undefined) reject("result is undefind")
                         if (result.length > 0) { resolve(result) } else { reject(new Error("result is not an empty array")) }
                     })
                     connect.release()
