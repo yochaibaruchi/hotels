@@ -23,20 +23,28 @@ class userBL {
         const salt = await bcrypt.genSalt()
         return await bcrypt.hash(password, salt)
     }
-
+    // more then one resulved
     //the function Gets user object passed as U 
     async signIn(u) {
         try {
             const response = await new Promise((resolve, reject) => {
                 pool.getConnection((connectionError, connect) => {
                     if (connectionError) throw connectionError
-                    this.hashnig(u.user_password).then((hashedPassword) => {
-                        const sql = `INSERT INTO user (first_name,last_name,user_email,user_password,user_country) VALUES  ('${u.first_name}','${u.last_name}','${u.user_email}','${hashedPassword}','${u.user_country}') `
-                        connect.query(sql, (err, result) => {
-                            if (err) reject(new Error(err.message))
-                            //return created id
-                            resolve(result.insertId)
-                        })
+                    const emailSql = `SELECT * FROM user WHERE user_email = '${u.user_email}'`
+                    connect.query(emailSql, (err, result) => {
+                        if (err) reject(new Error(err.message))
+                        if (result.length > 0) {
+                            resolve(0)
+                        } else {
+                            this.hashnig(u.user_password).then((hashedPassword) => {
+                                const sql = `INSERT INTO user (first_name,last_name,user_email,user_password,user_country) VALUES  ('${u.first_name}','${u.last_name}','${u.user_email}','${hashedPassword}','${u.user_country}') `
+                                connect.query(sql, (err, result) => {
+                                    if (err) reject(new Error(err.message))
+                                    //return created id
+                                    resolve(result.insertId)
+                                })
+                            })
+                        }
                     })
                     connect.release()
                 })
