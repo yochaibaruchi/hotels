@@ -1,5 +1,5 @@
 # hotels
 
-## project for upload with aws
+## project to upload with aws
 
 not working
