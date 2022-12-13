@@ -20,7 +20,11 @@ router.post('/signIn', async function (req, resp) {
     try {
         //going to sign in function in BL
         let data = await userBL.signIn(user)
-        return resp.status(200).json(data)
+        if (data === 0) {
+            return resp.status(400).json(data)
+        } else {
+            return resp.status(201).json(data)
+        }
     } catch (err) {
         console.log(err);
         return resp.json(err)
