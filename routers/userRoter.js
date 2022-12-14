@@ -76,7 +76,7 @@ router.get('/reservations/:id', async (req, resp) => {
             console.log(err);
         }
     } else {
-        return resp.status(200).json({ auth: false })
+        return resp.status(200).json(false)
     }
 })
 
