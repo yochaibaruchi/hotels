@@ -66,11 +66,17 @@ router.get('/', async function (req, resp) {
 
 router.get('/reservations/:id', async (req, resp) => {
     const id = req.params.id
-    try {
-        let data = await userBL.getUserReservetions(id)
-        return resp.status(200).json(data)
-    } catch (err) {
-        console.log(err);
+    const token = req.headers['x-access-token']
+    let isValid = await tokenManage.auth(token)
+    if (isValid) {
+        try {
+            let data = await userBL.getUserReservetions(id)
+            return resp.status(200).json(data)
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        return resp.status(200).json({ auth: false })
     }
 })
 
