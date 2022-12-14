@@ -156,7 +156,7 @@ class userBL {
                     const sql = `call hotelDB.get_user_reservations(${userId});`
                     connect.query(sql, (err, result) => {
                         if (err) reject(new Error(err.message))
-                        resolve(result)
+                        resolve(result[0])
                     })
                     connect.release()
                 })
