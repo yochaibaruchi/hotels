@@ -166,6 +166,22 @@ class userBL {
     }
 
 
+    async updateUser(user) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                pool.getConnection((error, connect) => {
+                    if (error) throw error
+                    const sql = `UPDATE hotelDB.user SET  user_id = '${user.userId}',first_name = '${user.firstName}', last_name = '${user.lastName}', user_email = '${user.email}', user_password = '${user.password}', user_country = '${user.country}' WHERE user_id = ${user.id}`
+                    connect.query(sql, (err, result) => {
+                        if (err) reject(new Error(err.message))
+                        resolve(result)
+                    })
+                    connect.release()
+                })
+            })
+        } catch (err) { throw err }
+    }
+
 
 }
 

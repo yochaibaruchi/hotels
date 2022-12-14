@@ -81,7 +81,16 @@ router.get('/reservations/:id', async (req, resp) => {
 })
 
 
+router.put('/update', async (req, resp) => {
+    const user = req.body
+    try {
+        const data = await userBL.updateUser(user)
+        return resp.status(200).json(data)
+    } catch (err) {
+        console.log(err);
+    }
 
+})
 
 
 
