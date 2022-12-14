@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const pool = require('../config/connection')
+const { resolve } = require('path')
 
 
 
@@ -147,6 +148,22 @@ class userBL {
         }
     }
 
+    async getUserReservetions(userId) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                pool.getConnection((error, connect) => {
+                    if (error) throw error
+                    const sql = `call hotelDB.get_user_reservations(${userId});`
+                    connect.query(sql, (err, result) => {
+                        if (err) reject(new Error(err.message))
+                        resolve(result)
+                    })
+                    connect.release()
+                })
+            })
+            return response
+        } catch (err) { throw err }
+    }
 
 
 

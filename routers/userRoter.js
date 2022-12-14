@@ -64,6 +64,15 @@ router.get('/', async function (req, resp) {
     } else return resp.json({ auth: false })
 })
 
+router.get('/reservations/:id', async (req, resp) => {
+    const id = req.params.id
+    try {
+        let data = await userBL.getUserReservetions(id)
+        return resp.status(200).json(data)
+    } catch (err) {
+        console.log(err);
+    }
+})
 
 
 
