@@ -88,14 +88,14 @@ router.put('/update', async (req, resp) => {
     if (isValid) {
         try {
             const data = await userBL.updateUser(user)
-            if (data !== 1) return resp.status(200).json(false)
-            return resp.status(200).json(true)
+            if (data !== 1) return resp.status(200).json("no affected rows")
+            return resp.status(200).json("good")
 
         } catch (err) {
             console.log(err);
         }
     } else {
-        return resp.status(200).json(false)
+        return resp.status(200).json("not auth")
     }
 
 })
