@@ -83,11 +83,19 @@ router.get('/reservations/:id', async (req, resp) => {
 
 router.put('/update', async (req, resp) => {
     const user = req.body
-    try {
-        const data = await userBL.updateUser(user)
-        return resp.status(200).json(data)
-    } catch (err) {
-        console.log(err);
+    const token = req.headers['x-access-token']
+    let isValid = await tokenManage.auth(token)
+    if (isValid) {
+        try {
+            const data = await userBL.updateUser(user)
+            if (data !== 1) return resp.status(200).json(false)
+            return resp.status(200).json(true)
+
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        return resp.status(200).json(false)
     }
 
 })

@@ -176,7 +176,7 @@ class userBL {
                         const sql = `UPDATE hotelDB.user SET user_id='${user.userId}',first_name ='${user.firstName}', last_name = '${user.lastName}', user_email='${user.email}', user_password = '${newHashedPassword}', user_country = '${user.country}' WHERE user_id = '${user.userId}' `
                         connect.query(sql, (err, result) => {
                             if (err) reject(new Error(err.message))
-                            resolve(result)
+                            resolve(result.affectedRows)
                         })
                     }))
                     connect.release()
