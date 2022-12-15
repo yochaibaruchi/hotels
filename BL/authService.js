@@ -9,10 +9,10 @@ class authService {
     async auth(token) {
         try {
             const response = await new Promise((resolve) => {
-                if (!token) resolve({ auth: false })
+                if (!token) resolve(false)
                 jwt.verify(token, process.env.PRIVATE_KEY, (err) => {
-                    if (err) resolve({ auth: false })
-                    resolve({ auth: true })
+                    if (err) resolve(false)
+                    resolve(true)
                 })
             })
             return response;
