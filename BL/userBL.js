@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const pool = require('../config/connection')
-const { resolve } = require('path')
+
 
 
 
