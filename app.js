@@ -1,4 +1,7 @@
 const express = require('express');
+const cluster = require('cluster');
+const { cpus } = require('os')
+const numCPUs = cpus().length;
 const cors = require('cors');
 const app = express();
 app.use(cors())
