@@ -3,8 +3,7 @@ const cluster = require('cluster');
 const { cpus } = require('os')
 const num_processes = cpus().length;
 const cors = require('cors');
-
-
+console.log(num_processes);
 if (cluster.isPrimary) {
     console.log(`primary ${process.pid} is running`)
 
